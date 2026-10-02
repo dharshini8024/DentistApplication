@@ -1,0 +1,763 @@
+/* ==========================================================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  color: #334155;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. ISOLATED FIXED TOP NAVIGATION HEADER
+   ========================================================================== */
+/* ==========================================================================
+   HEADER FIX: FORCE WHITE/LIGHT TEXT VISIBILITY
+   ========================================================================== */
+header.top-nav {
+  display: block !important;
+  width: 100% !important;
+  background-color: #0f172a !important; /* Dark navy background */
+  border-bottom: 2px solid #1e293b;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.nav-container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100%;
+  padding: 10px 24px;
+  box-sizing: border-box;
+  min-height: 65px;
+}
+
+.nav-left {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 16px;
+}
+
+.clinic-logo {
+  height: 44px;
+  width: auto;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.title-group {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center;
+}
+
+.brand-line {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px;
+}
+
+/* Force text visibility */
+.header-text-main {
+  color: #ffffff !important; /* Pure white */
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+}
+
+.header-text-sub {
+  color: #94a3b8 !important; /* Light slate grey */
+  font-size: 13px !important;
+  display: inline-block !important;
+}
+
+.doctor-line {
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 2px;
+}
+
+.header-text-muted {
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  font-style: italic;
+}
+
+.doctor-name-text {
+  color: #38bdf8 !important; /* Bright cyan/blue */
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.nav-right {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px;
+}
+
+lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #334155;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.lang-selector select {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.lang-selector select option {
+  background: var(--primary-dark);
+  color: white;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-logout {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 0 16px;
+  height: 38px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   3. DASHBOARD MAIN LAYOUT & SIDEBAR QUEUE
+   ========================================================================== */
+.dashboard-layout {
+  display: flex;
+  min-height: calc(100vh - 65px);
+  width: 100%;
+}
+
+.queue-sidebar {
+  width: 290px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 24px;
+  max-width: 1200px;
+  min-width: 0; /* Ensures flex elements don't overflow parent */
+}
+
+/* Sidebar Elements */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.sidebar-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.queue-badge {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.completed-badge {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.queue-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.queue-card:hover {
+  border-color: #0284c7;
+  background-color: #f0f9ff;
+}
+
+.patient-info strong {
+  display: block;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.patient-info p {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.btn-next-queue {
+  margin-top: auto;
+  background-color: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.btn-next-queue:hover {
+  background-color: #0369a1;
+}
+
+/* ==========================================================================
+   4. CLINICAL RECORD CARDS & FORM INPUTS
+   ========================================================================== */
+.section-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.step-num {
+  background-color: #0284c7;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.card-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Active Patient Banner */
+.active-patient-card {
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+.patient-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.status-tag {
+  display: inline-block;
+  background-color: #0284c7;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.patient-details h2 {
+  font-size: 20px;
+  color: #0f172a;
+}
+
+.patient-meta {
+  font-size: 13px;
+  color: #475569;
+}
+
+.visit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.visit-info label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Form Controls & Textareas */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+textarea, input[type="text"], input[type="date"], input[type="number"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background-color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+textarea:focus, input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+}
+
+.compact-textarea {
+  resize: vertical;
+}
+
+/* Checkbox Grid System */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #334155;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0284c7;
+  cursor: pointer;
+}
+
+.sub-group {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.sub-label {
+  display: block;
+  font-size: 14px;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   5. TABLES & ESTIMATED FEES
+   ========================================================================== */
+.treatment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.treatment-col h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #334155;
+}
+
+.fee-estimation-box {
+  margin-top: 16px;
+}
+
+.fee-estimation-box h4 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #1e293b;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
+.clinical-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.clinical-table th, .clinical-table td {
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+}
+
+.clinical-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+}
+
+.clinical-table input {
+  border: 1px solid transparent;
+  padding: 4px 6px;
+}
+
+.clinical-table input:focus {
+  border-color: #0284c7;
+}
+
+#docEstimatedCost {
+  font-weight: 700;
+  color: #0284c7;
+  background-color: #e0f2fe;
+}
+
+.total-row td {
+  background-color: #f8fafc;
+}
+
+.btn-add-row {
+  background-color: #f1f5f9;
+  color: #0284c7;
+  border: 1px dashed #0284c7;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add-row:hover {
+  background-color: #e0f2fe;
+}
+
+.btn-remove-row {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.btn-remove-row:hover {
+  color: #b91c1c;
+}
+
+/* ==========================================================================
+   6. CONSENT & SUBMIT BUTTON
+   ========================================================================== */
+.rights-card {
+  background-color: #f8fafc;
+}
+
+.rights-card h4 {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.rights-list {
+  padding-left: 20px;
+  font-size: 12px;
+  color: #64748b;
+  margin: 8px 0 16px 0;
+}
+
+.rights-list li {
+  margin-bottom: 4px;
+}
+
+.consent-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.consent-checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #16a34a;
+}
+
+.btn-submit {
+  width: 100%;
+  background-color: #16a34a;
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(22, 163, 74, 0.2);
+}
+
+.btn-submit:hover {
+  background-color: #15803d;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 900px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
+  .queue-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .treatment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-line {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+/* Header Container */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0c1427; /* Dark clinic theme background */
+  padding: 12px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #ffffff;
+}
+
+/* Left Section: Branding */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-logo {
+  height: 52px;
+  width: auto;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.clinic-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+.clinic-subtitle-tamil {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+.doctors-meta {
+  margin: 4px 0 0 0;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  font-weight: 400;
+}
+
+/* Right Section: Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Welcome Badge */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  color: #38bdf8;
+}
+
+.user-greeting {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.user-greeting strong {
+  color: #ffffff;
+}
+
+/* Language Selector */
+.language-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.globe-icon {
+  color: #94a3b8;
+}
+
+.lang-dropdown {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.lang-dropdown option {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+/* Logout Button */
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+.logout-btn:active {
+  transform: scale(0.98);
+}
+
+/* Responsive Scaling */
+@media (max-width: 992px) {
+  .doctors-meta {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

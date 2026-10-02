@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor Console | Dashboard</title>
+  <link rel="stylesheet" href="dummy-doctor-dashboardd.css" />
+</head>
+<body>
+
+  <!-- TOP HEADER NAVBAR -->
+  <header class="top-navbar">
+    <div class="brand">
+      <img src="issai-logo.jpeg" alt="ISSAI Logo" class="clinic-logo" />
+      <div class="title-group">
+        <div class="brand-line">
+          <span class="header-text-main" data-i18n="clinicTitle">ISSAI Dental Clinic</span>
+          <span class="header-text-sub" data-i18n="clinicSubTitle">(இசை பல் மருத்துவமனை)</span>
+        </div>
+        <div class="doctor-line">
+          <span id="loadingProfile" class="header-text-muted">Loading Doctor Profile...</span>
+          <span id="doctorName" class="doctor-name-text"></span>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- DASHBOARD NAVIGATION BUTTON -->
+    <div class="nav-center">
+      <button class="nav-btn" id="dashboardBtn">
+        📊 Dashboard
+      </button>
+    </div>
+
+    <!-- SEARCH BAR IN HEADER -->
+    <form id="headerSearchForm" class="header-search">
+      <input type="text" id="searchPatientIdInput" placeholder="Enter Patient ID (e.g., PAT-881)" />
+      <button type="submit" class="btn-search">🔍 Search</button>
+    </form>
+
+    <!-- DOCTOR PROFILE & LOGOUT -->
+    <div class="doctor-profile">
+      <div class="doctor-info">
+        <p class="doctor-name">Dr. Sarah Jenkins</p>
+        <span class="online-status">Online</span>
+      </div>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="dashboard-grid">
+    
+    <!-- LEFT SIDEBAR: TODAY'S APPOINTMENTS -->
+    <aside class="sidebar-card">
+      <div class="sidebar-header">
+        <h3>📅 Today's Appointments</h3>
+        <span class="badge-count" id="patientCountBadge">3 Patients</span>
+      </div>
+
+      <div class="appointment-list" id="appointmentListContainer">
+        <!-- Rendered Dynamically via JS -->
+      </div>
+    </aside>
+
+    <!-- MAIN RIGHT SECTION: ACTIVE PATIENT DETAILS & CLINICAL FORM -->
+    <section class="main-content">
+      
+      <!-- PATIENT PROFILE BANNER -->
+      <div class="card patient-banner">
+        <div class="patient-top-info">
+          <div>
+            <h2 id="activePatientName">Michael Chang</h2>
+            <p class="patient-sub-details" id="activePatientSubDetails">
+              ID: PAT-881 | Age: 34 | Gender: Male | Blood Group: O+
+            </p>
+          </div>
+          <div class="patient-contact">
+            <p>📞 Phone: <span id="activePatientPhone">+1 555-0192</span></p>
+            <p>✉️ Email: <span id="activePatientEmail">michael.c@example.com</span></p>
+          </div>
+        </div>
+
+        <div class="alerts-wrapper">
+          <div class="alert-box alert-danger">
+            <strong>⚠️ Allergies:</strong> <span id="activePatientAllergies">Penicillin, Latex</span>
+          </div>
+          <div class="alert-box alert-warning">
+            <strong>📜 Medical Conditions:</strong> <span id="activePatientConditions">Hypertension</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TWO-COLUMN WORKSPACE: VISIT HISTORY & NEW CONSULTATION -->
+      <div class="workspace-grid">
+        
+        <!-- VISIT HISTORY COLUMN -->
+        <div class="card history-card">
+          <h3>📜 Visit History</h3>
+          <div class="history-timeline" id="visitHistoryContainer">
+            <!-- Dynamic History Cards Inserted Here -->
+          </div>
+        </div>
+
+        <!-- NEW CONSULTATION ENTRY FORM -->
+        <div class="card consultation-card">
+          <h3>📝 New Consultation Entry</h3>
+          
+          <form id="consultationForm">
+            <div class="form-group">
+              <label for="clinicalDiagnosis">Clinical Diagnosis & Notes</label>
+              <textarea 
+                id="clinicalDiagnosis" 
+                rows="4" 
+                placeholder="Enter findings, treatment provided, or observations..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="prescription-builder">
+              <label>Add Prescription Medicine</label>
+              <div class="medicine-input-row">
+                <input type="text" id="medName" placeholder="Medicine Name (e.g. Amoxicillin)" />
+                <input type="text" id="medDosage" placeholder="Dosage (e.g. 500mg)" />
+              </div>
+
+              <div class="dosage-schedule-row">
+                <div>
+                  <label><small>Morning</small></label>
+                  <select id="medMorning">
+                    <option value="0 (No)">0 (No)</option>
+                    <option value="1 (Yes)">1 (Yes)</option>
+                  </select>
+                </div>
+                <div>
+                  <label><small>Afternoon</small></label>
+                  <select id="medAfternoon">
+                    <option value="0 (No)">0 (No)</option>
+                    <option value="1 (Yes)">1 (Yes)</option>
+                  </select>
+                </div>
+                <div>
+                  <label><small>Night</small></label>
+                  <select id="medNight">
+                    <option value="0 (No)">0 (No)</option>
+                    <option value="1 (Yes)">1 (Yes)</option>
+                  </select>
+                </div>
+                <button type="button" class="btn-add-med" id="addMedicineBtn">+ Add</button>
+              </div>
+
+              <!-- MEDICINE TABLE -->
+              <table class="med-table">
+                <thead>
+                  <tr>
+                    <th>Medicine</th>
+                    <th>Dosage</th>
+                    <th>Morning</th>
+                    <th>Afternoon</th>
+                    <th>Night</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="medicineTableBody">
+                  <tr id="emptyMedRow">
+                    <td colspan="6" style="text-align:center; color:#94a3b8;">No medicines added yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button type="submit" class="btn-save-consultation">Save Consultation & Prescription</button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="dummy-doctor.js"></script>
+</body>
+</html

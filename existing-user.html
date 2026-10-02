@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSAI Dental Clinic - Existing Patient Workspace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="existing-user.css">
+</head>
+<body data-lang="en">
+
+  <!-- TOP NAVBAR WITH BRANDING & LANGUAGE CONTROLS -->
+  <header class="top-nav">
+    <div class="header-left">
+      <img src="issai-logo.jpeg" alt="ISSAI Logo" class="clinic-logo" onerror="this.src='issai-logo.png'" />
+      <div class="clinic-text-group">
+        <h2 class="clinic-english-title">ISSAI Dental Clinic</h2>
+        <span class="clinic-tamil-title">(இசை பல் மருத்துவமனை)</span>
+        <p class="doctors-tag">Dr. C. Jeganthpuri, MDS. (Orthodontics) &nbsp;|&nbsp; Dr. S. Manimozhi, BDS.</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="lang-selector">
+        <span class="icon-globe">🌐</span>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="both">English + தமிழ்</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="en">English Only</option>
+        </select>
+      </div>
+      <button type="button" class="logout-btn" onclick="handleLogout()">
+        <span class="lang-en">Logout</span>
+        <span class="lang-ta">வெளியேறு</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- SECONDARY NAVIGATION MENU -->
+  <nav class="admin-navigation-bar">
+    <button class="nav-btn" onclick="navigateTo('admin-dashboard.html')">
+      📊 <span class="lang-en">Dashboard</span><span class="lang-ta">தகவல் பலகை</span>
+    </button>
+    
+    <button class="nav-btn active" onclick="navigateTo('existing-user.html')">
+      👤 <span class="lang-en">Existing Patient</span><span class="lang-ta">பழைய நோயாளி</span>
+    </button>
+    <button class="nav-btn" onclick="navigateTo('appointment.html')">
+      📅 <span class="lang-en">Appointment</span><span class="lang-ta">முன்பதிவு</span>
+    </button>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="page-container">
+    <div class="patient-lookup-card">
+      <div class="card-header">
+        <span class="search-icon">🔍</span>
+        <div>
+          <h2>
+            <span class="lang-en">Patient Lookup</span>
+            <span class="lang-ta">நோயாளி தேடல்</span>
+          </h2>
+          <p class="lookup-subtitle">
+            <span class="lang-en">Enter a Patient ID, Phone Number, or Patient Name to view profile details, appointment logs, and prescriptions.</span>
+            <span class="lang-ta">சுயவிவரம், முன்பதிவு பதிவுகள் மற்றும் மருத்துவ குறிப்புகளைக் காண நோயாளி ஐடி, தொலைபேசி எண் அல்லது பெயரை உள்ளிடவும்.</span>
+          </p>
+        </div>
+      </div>
+
+      <form id="patientSearchForm" onsubmit="handlePatientSearch(event)">
+        <div class="form-group">
+          <label class="field-label" for="patientSearchInput">
+            <span class="lang-en">Patient ID / Phone Number / Patient Name</span>
+            <span class="lang-ta">நோயாளி ஐடி / தொலைபேசி எண் / நோயாளி பெயர்</span>
+            <span class="required-star">*</span>
+          </label>
+          <div class="search-input-group">
+            <input 
+              type="text" 
+              id="patientSearchInput" 
+              placeholder="e.g. PAT-881, 9876543210, or Kumar S" 
+              required 
+            />
+            <button type="submit" class="btn-search">
+              <span class="lang-en">Search Patient</span>
+              <span class="lang-ta">தேடுக</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <p class="demo-hint">
+        💡 <span class="lang-en">Try searching demo inputs:</span><span class="lang-ta">மாதிரி தேடல்:</span> 
+        <strong>PAT-881</strong>, <strong>9876543210</strong>, <span class="lang-en">or</span><span class="lang-ta">அல்லது</span> <strong>Kumar S</strong>
+      </p>
+    </div>
+
+    <!-- PATIENT RESULTS CONTAINER (DYNAMICALLY FILLED BY JS) -->
+    <div id="searchResults" class="results-container hidden"></div>
+  </main>
+<!-- Correct script order inside existing-user.html -->
+<script src="existing-user.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSAI Dental Clinic - Portal Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dummy.css">
+</head>
+<body data-lang="en">
+
+  <!-- TOP NAVBAR WITH CLINIC BRANDING -->
+  <header class="top-nav">
+    <div class="header-left">
+      <img src="issai-logo.jpeg" alt="ISSAI Logo" class="clinic-logo" onerror="this.src='issai-logo.png'" />
+      <div class="clinic-text-group">
+        <h2 class="clinic-english-title">ISSAI Dental Clinic</h2>
+        <span class="clinic-tamil-title">(இசை பல் மருத்துவமனை)</span>
+        <p class="doctors-tag">Dr. C. Jeganthpuri, MDS. (Orthodontics) &nbsp;|&nbsp; Dr. S. Manimozhi, BDS.</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="lang-selector">
+        <span class="icon-globe">🌐</span>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="en" selected>English Only</option>
+          <option value="both">English + தமிழ்</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DUAL-COLUMN LOGIN CONTAINER -->
+  <main class="login-container">
+    <div class="page-title-wrapper">
+      <h2>
+        <span class="lang-en">Clinic Management Portal</span>
+        <span class="lang-ta">மருத்துவமனை மேலாண்மை தளம்</span>
+      </h2>
+      <p>
+        <span class="lang-en">Please sign in through your respective portal column</span>
+        <span class="lang-ta">உங்களது பிரத்யேக உள்நுழைவு பகுதியை பயன்படுத்தவும்</span>
+      </p>
+    </div>
+
+    <!-- DUAL COLUMNS LAYOUT -->
+    <div class="login-grid">
+      
+      <!-- COLUMN 1: DOCTOR LOGIN (HANDLES BOTH REGULAR & CHIEF DOCTORS) -->
+      <div class="login-card doctor-card">
+        <div class="card-badge doctor-badge">
+          🩺 <span class="lang-en">Doctor Portal</span><span class="lang-ta">மருத்துவர் பகுதி</span>
+        </div>
+        
+        <div id="doctorAlert" class="alert-box hidden"></div>
+
+        <form id="doctorLoginForm" onsubmit="return handleDoctorLogin(event)">
+          <div class="form-group">
+            <label class="field-label">
+              <span class="lang-en">Doctor Username / ID</span>
+              <span class="lang-ta">மருத்துவர் பயனர் பெயர்</span>
+            </label>
+            <input type="text" id="maidid" placeholder="e.g. mailid" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">
+              <span class="lang-en">Password</span>
+              <span class="lang-ta">கடவுச்சொல்</span>
+            </label>
+            <input type="password" id="docPassword" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-footer">
+            <a href="javascript:void(0)" class="forgot-link" onclick="openForgotModal('Doctor')">
+              <span class="lang-en">Forgot Password?</span>
+              <span class="lang-ta">கடவுச்சொல் மறந்துவிட்டதா?</span>
+            </a>
+          </div>
+
+          <button type="submit" class="btn-submit btn-doctor">
+            <span class="lang-en">Login as Doctor</span>
+            <span class="lang-ta">மருத்துவராக உள்நுழையவும்</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- COLUMN 2: RECEPTION / CLIENT LOGIN -->
+      <div class="login-card reception-card">
+        <div class="card-badge reception-badge">
+          📋 <span class="lang-en">Reception Portal</span><span class="lang-ta">வரவேற்பறை பகுதி</span>
+        </div>
+
+        <div id="receptionAlert" class="alert-box hidden"></div>
+
+        <form id="receptionLoginForm" onsubmit="return handleReceptionLogin(event)">
+          <div class="form-group">
+            <label class="field-label">
+              <span class="lang-en">Reception Username / ID</span>
+              <span class="lang-ta">வரவேற்பறை பயனர் பெயர்</span>
+            </label>
+            <input type="text" id="recUsername" placeholder="e.g. reception" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">
+              <span class="lang-en">Password</span>
+              <span class="lang-ta">கடவுச்சொல்</span>
+            </label>
+            <input type="password" id="recPassword" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-footer">
+            <a href="javascript:void(0)" class="forgot-link" onclick="openForgotModal('Reception')">
+              <span class="lang-en">Forgot Password?</span>
+              <span class="lang-ta">கடவுச்சொல் மறந்துவிட்டதா?</span>
+            </a>
+          </div>
+
+          <button type="submit" class="btn-submit btn-reception">
+            <span class="lang-en">Login as Reception</span>
+            <span class="lang-ta">வரவேற்பாளராக உள்நுழையவும்</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FORGOT PASSWORD MODAL -->
+  <div id="forgotModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4>
+          <span class="lang-en">Reset Password</span>
+          <span class="lang-ta">கடவுச்சொல் மீட்டமைப்பு</span>
+        </h4>
+        <button type="button" class="close-btn" onclick="closeForgotModal()">✕</button>
+      </div>
+      <p class="modal-desc" id="modalTargetDesc">
+        <span class="lang-en">Enter registered email address to receive password recovery link.</span>
+        <span class="lang-ta">உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்.</span>
+      </p>
+      
+      <form id="forgotForm" onsubmit="return sendResetEmail(event)">
+        <div class="form-group">
+          <input type="email" id="resetEmailInput" placeholder="name@issai.com" required />
+        </div>
+        <button type="submit" class="btn-submit-reset" id="resetSubmitBtn">
+          <span class="lang-en">Send Reset Link</span>
+          <span class="lang-ta">மீட்பு இணைப்பு அனுப்புக</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="dummy.js?v=1000"></script>
+</body>
+</html>

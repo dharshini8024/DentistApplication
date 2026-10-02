@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ISSAI Dental Clinic - Reception Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-dashboard.css" />
+</head>
+<body data-lang="both">
+
+  <!-- TOP HEADER NAVBAR WITH BRANDING & BILINGUAL CONTROLS -->
+  <header class="top-nav">
+    <div class="header-left">
+      <img src="issai-logo.jpeg" alt="ISSAI Logo" class="clinic-logo" onerror="this.src='issai-logo.png'" />
+      <div class="clinic-text-group">
+        <h2 class="clinic-english-title">ISSAI Dental Clinic</h2>
+        <span class="clinic-tamil-title">(இசை பல் மருத்துவமனை)</span>
+        <p class="doctors-tag">Dr. C. Jeganthpuri, MDS. (Orthodontics) &nbsp;|&nbsp; Dr. S. Manimozhi, BDS.</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="lang-selector">
+        <span class="icon-globe">🌐</span>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="en" selected>English Only</option>
+          <option value="both">English + தமிழ்</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+        </select>
+      </div>
+      <button type="button" class="logout-btn" id="logoutBtn" onclick="handleLogout()">
+        <span class="lang-en">Logout</span>
+        <span class="lang-ta">வெளியேறு</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- SECONDARY NAVIGATION MENU -->
+  <nav class="admin-navigation-bar">
+    <button class="nav-btn active" onclick="navigateTo('admin-dashboard.html')">
+      📊 <span class="lang-en">Dashboard</span><span class="lang-ta">தகவல் பலகை</span>
+    </button>
+    <button class="nav-btn" onclick="navigateTo('existing-user.html')">
+      👤 <span class="lang-en">Existing Patient</span><span class="lang-ta">பழைய நோயாளி</span>
+    </button>
+    <button class="nav-btn" onclick="navigateTo('appointment.html')">
+      📅 <span class="lang-en">Appointment</span><span class="lang-ta">முன்பதிவு</span>
+    </button>
+  </nav>
+
+  <!-- MAIN ADMIN DASHBOARD CONTENT -->
+  <div class="admin-container">
+
+    <!-- METRICS OVERVIEW BANNER -->
+    <section class="stats-grid">
+      <div class="stat-card" onclick="navigateTo('appointment.html')">
+        <div class="stat-icon new-user-bg">👤+</div>
+        <div class="stat-info">
+          <h3>
+            <span class="lang-en">New Users</span>
+            <span class="lang-ta">புதிய பயனர்கள்</span>
+          </h3>
+          <p class="stat-number" id="statNewUsers">0</p>
+          <span class="stat-label">
+            <span class="lang-en">Registered Today</span>
+            <span class="lang-ta">இன்று பதிவானவை</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card" onclick="navigateTo('existing-user.html')">
+        <div class="stat-icon existing-user-bg">👥</div>
+        <div class="stat-info">
+          <h3>
+            <span class="lang-en">Existing Users</span>
+            <span class="lang-ta">பழைய பயனர்கள்</span>
+          </h3>
+          <p class="stat-number" id="statTotalUsers">0</p>
+          <span class="stat-label">
+            <span class="lang-en">Active Profiles</span>
+            <span class="lang-ta">செயலில் உள்ள கணக்குகள்</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card" onclick="navigateTo('appointment.html')">
+        <div class="stat-icon appointment-bg">📅</div>
+        <div class="stat-info">
+          <h3>
+            <span class="lang-en">Appointments</span>
+            <span class="lang-ta">முன்பதிவுகள்</span>
+          </h3>
+          <p class="stat-number" id="statTodayAppointments">0</p>
+          <span class="stat-label">
+            <span class="lang-en">Scheduled Today</span>
+            <span class="lang-ta">இன்றைய முன்பதிவுகள்</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN WORKSPACE -->
+    <div class="admin-workspace-grid">
+
+      <!-- NAVIGATION ACTIONS PANEL -->
+      <div class="card">
+        <div class="card-header">
+          <h3>
+            🚀 <span class="lang-en">Navigation Actions</span>
+            <span class="lang-ta">விரைவு செயல்பாடுகள்</span>
+          </h3>
+        </div>
+        <div class="action-buttons-list">
+          <button class="action-card-btn" onclick="navigateTo('appointment.html')">
+            <div class="btn-text">
+              <strong>
+                <span class="lang-en">Add New User</span>
+                <span class="lang-ta">புதிய பயனர் சேர்க்க</span>
+              </strong>
+              <span>
+                <span class="lang-en">Register new patients, doctors, or staff members</span>
+                <span class="lang-ta">புதிய நோயாளி அல்லது ஊழியர்களை பதிவு செய்ய</span>
+              </span>
+            </div>
+            <span class="arrow">➔</span>
+          </button>
+
+          <button class="action-card-btn" onclick="navigateTo('existing-user.html')">
+            <div class="btn-text">
+              <strong>
+                <span class="lang-en">Manage Existing Users</span>
+                <span class="lang-ta">பழைய பயனர்களை நிர்வகிக்க</span>
+              </strong>
+              <span>
+                <span class="lang-en">Search, update, or deactivate existing accounts</span>
+                <span class="lang-ta">பழைய கணக்குகளைத் தேட மற்றும் புதுப்பிக்க</span>
+              </span>
+            </div>
+            <span class="arrow">➔</span>
+          </button>
+
+          <button class="action-card-btn" onclick="navigateTo('appointment.html')">
+            <div class="btn-text">
+              <strong>
+                <span class="lang-en">Appointment Management</span>
+                <span class="lang-ta">முன்பதிவு நிர்வாகம்</span>
+              </strong>
+              <span>
+                <span class="lang-en">View, reschedule, or cancel patient bookings</span>
+                <span class="lang-ta">முன்பதிவுகளைப் பார்க்க, மாற்ற மற்றும் ரத்து செய்ய</span>
+              </span>
+            </div>
+            <span class="arrow">➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- LIVE TODAY'S APPOINTMENTS BY DOCTOR PANEL -->
+      <div class="card">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <h3>
+            🩺 <span class="lang-en">Today's Doctor Appointments</span>
+            <span class="lang-ta">இன்றைய மருத்துவர் முன்பதிவுகள்</span>
+          </h3>
+          <small style="color: #10b981; font-weight: 600;">● Live Updating</small>
+        </div>
+        
+        <div id="doctorAppointmentsContainer" style="display: flex; flex-direction: column; gap: 15px; margin-top: 10px;">
+          <!-- Dynamic Content Injected via JavaScript -->
+          <div style="text-align: center; color: #6b7280; padding: 20px;">
+            <span class="lang-en">Loading today's schedule...</span>
+            <span class="lang-ta">இன்றைய முன்பதிவு பட்டியல் ஏற்றப்படுகிறது...</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="admin-dashboard.js"></script>
+</body>
+</html>

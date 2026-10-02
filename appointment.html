@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSAI Dental Clinic - Reception & Appointment Workspace</title>
+  <link rel="stylesheet" href="appointment-styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-lang="en">
+
+  <!-- TOP NAVBAR -->
+  <header class="top-nav">
+    <div class="header-left">
+      <img src="issai-logo.jpeg" alt="ISSAI Logo" class="clinic-logo" onerror="this.src='issai-logo.png'" />
+      <div class="clinic-text-group">
+        <h2 class="clinic-english-title">ISSAI Dental Clinic</h2>
+        <span class="clinic-tamil-title">(இசை பல் மருத்துவமனை)</span>
+        <p class="doctors-tag">Dr. C. Jeganthpuri, MDS. (Orthodontics) &nbsp;|&nbsp; Dr. S. Manimozhi, BDS.</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="lang-selector">
+        <span class="icon-globe">🌐</span>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="both">English + தமிழ்</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="en">English Only</option>
+        </select>
+      </div>
+      <button type="button" class="logout-btn" onclick="logout()">
+        <span class="lang-en">Logout</span>
+        <span class="lang-ta">வெளியேறு</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="admin-navigation-bar">
+    <button class="nav-btn" onclick="navigateTo('admin-dashboard.html')">
+      📊 <span class="lang-en">Dashboard</span><span class="lang-ta">தகவல் பலகை</span>
+    </button>
+    <button class="nav-btn" onclick="navigateTo('existing-user.html')">
+      👤 <span class="lang-en">Existing Patient</span><span class="lang-ta">பழைய நோயாளி</span>
+    </button>
+    <button class="nav-btn active" onclick="navigateTo('appointment.html')">
+      📅 <span class="lang-en">Appointment</span><span class="lang-ta">முன்பதிவு</span>
+    </button>
+  </nav>
+
+  <div class="dashboard-container">
+    
+    <!-- LEFT PANEL: BOOK APPOINTMENT -->
+    <section class="booking-card">
+      <div class="card-title-group">
+        <h3>📅 <span class="lang-en">Book New Appointment</span> <span class="lang-ta">புதிய முன்பதிவு செய்ய</span></h3>
+        <p><span class="lang-en">Schedule consultations for new or registered patients.</span> <span class="lang-ta">புதிய மற்றும் பதிவுசெய்த நோயாளிகளுக்கு முன்பதிவு செய்யவும்.</span></p>
+      </div>
+
+      <!-- USER TYPE TOGGLE -->
+      <div class="user-toggle-group">
+        <button type="button" class="toggle-btn active" id="btnExisting" onclick="setUserType('existing')">
+          👤 <span class="lang-en">Existing User</span> <span class="lang-ta">பழைய நோயாளி</span>
+        </button>
+        <button type="button" class="toggle-btn" id="btnNew" onclick="setUserType('new')">
+          ➕ <span class="lang-en">New User</span> <span class="lang-ta">புதிய நோயாளி</span>
+        </button>
+      </div>
+
+      <form id="appointmentForm" onsubmit="handleBookAppointment(event)">
+        
+        <!-- EXISTING USER FIELD -->
+<div id="existingUserFields" class="form-group">
+  <div class="form-group">
+    <label class="field-label">
+      <span class="lang-en">Phone Number *</span> <span class="lang-ta">தொலைபேசி எண் *</span>
+    </label>
+    <input type="tel" id="existingPhone" placeholder="e.g. 9876543210" pattern="[0-9]{10}" oninput="autoLookupPatientName(this.value)" />
+  </div>
+
+  <div class="form-group" style="margin-top: 10px;">
+    <label class="field-label">
+      <span class="lang-en">Patient Name</span> <span class="lang-ta">நோயாளி பெயர்</span>
+    </label>
+    <input type="text" id="existingName" placeholder="Auto-fetches after entering phone number..." readonly class="read-only-input" />
+  </div>
+</div>
+
+        <!-- NEW USER FIELDS -->
+        <!-- NEW USER FIELDS -->
+<div id="newUserFields" class="form-group hidden">
+  <div class="grid-2col">
+    <div>
+      <label class="field-label"><span class="lang-en">Patient Name *</span> <span class="lang-ta">நோயாளி பெயர் *</span></label>
+      <input type="text" id="newName" placeholder="Full Name" />
+    </div>
+    <div>
+      <label class="field-label"><span class="lang-en">Phone Number *</span> <span class="lang-ta">தொலைபேசி எண் *</span></label>
+      <input type="tel" id="newPhone" placeholder="10-digit number" />
+    </div>
+  </div>
+
+  <div class="grid-2col" style="margin-top: 10px;">
+    <div>
+      <label class="field-label"><span class="lang-en">Gender *</span> <span class="lang-ta">பாலினம் *</span></label>
+      <select id="newGender">
+        <option value="">-- Select Gender --</option>
+        <option value="Male">Male / ஆண்</option>
+        <option value="Female">Female / பெண்</option>
+        <option value="Other">Other / இதர</option>
+      </select>
+    </div>
+    <div>
+      <label class="field-label"><span class="lang-en">Blood Group *</span> <span class="lang-ta">இரத்த வகை *</span></label>
+      <select id="newBloodGroup">
+        <option value="">-- Select Blood Group --</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid-2col" style="margin-top: 10px;">
+    <div>
+      <label class="field-label"><span class="lang-en">Date of Birth (DOB) *</span> <span class="lang-ta">பிறந்த தேதி *</span></label>
+      <input type="date" id="newDob" onchange="calculateAgeFromDOB(this.value)" />
+    </div>
+    <div>
+      <label class="field-label"><span class="lang-en">Age (Auto-calculated)</span> <span class="lang-ta">வயது</span></label>
+      <input type="text" id="newAge" placeholder="Auto-calculated" readonly class="read-only-input" />
+    </div>
+  </div>
+</div>
+
+        <div class="divider">
+          <span>🔍 <span class="lang-en">Consultation Details</span> <span class="lang-ta">சிகிச்சை விவரங்கள்</span></span>
+        </div>
+
+        <div class="grid-2col">
+          <div class="form-group">
+            <label class="field-label"><span class="lang-en">Assigned Doctor *</span> <span class="lang-ta">மருத்துவர் *</span></label>
+            <select id="doctorSelect" required>
+              <option value="">-- Select Doctor --</option>
+              <option value="Dr. C. Jeganthpuri">Dr. C. Jeganthpuri (Orthodontics)</option>
+              <option value="Dr. S. Manimozhi">Dr. S. Manimozhi (General)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="field-label"><span class="lang-en">Department *</span> <span class="lang-ta">பிரிவு *</span></label>
+            <select id="departmentSelect" required>
+              <option value="">-- Select Department --</option>
+              <option value="Orthodontics">Orthodontics</option>
+              <option value="General Dentistry">General Dentistry</option>
+              <option value="Endodontics">Endodontics</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2col">
+          <div class="form-group">
+            <label class="field-label"><span class="lang-en">Date *</span> <span class="lang-ta">தேதி *</span></label>
+            <input type="date" id="appointmentDate" required />
+          </div>
+          <div class="form-group">
+            <label class="field-label"><span class="lang-en">Time Slot (Optional)</span> <span class="lang-ta">நேரம் (விருப்பத்திற்குரியது)</span></label>
+            <select id="timeSlot">
+              <option value="">-- Select Slot --</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:30 AM">11:30 AM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="field-label"><span class="lang-en">Reason for Visit / Symptoms</span> <span class="lang-ta">காரணம் / அறிகுறிகள்</span></label>
+          <textarea id="symptoms" rows="2" placeholder="Briefly describe symptoms..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-booking">
+          <span class="lang-en">Book Appointment</span> <span class="lang-ta">முன்பதிவு செய்</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- RIGHT PANEL: SCHEDULED APPOINTMENTS & RECEPTION BILLING TABLE -->
+    <section class="table-card">
+      <div class="table-header">
+        <div>
+          <h3>📋 <span class="lang-en">Scheduled Appointments & Billing</span> <span class="lang-ta">திட்டமிடப்பட்ட முன்பதிவுகள் & கட்டணம்</span></h3>
+          <p><span class="lang-en">Receptionist Payment Update Desk</span> <span class="lang-ta">வரவேற்பறை பணம் புதுப்பித்தல் பக்கம்</span></p>
+        </div>
+        <span class="badge-count" id="bookingCount">0 Bookings</span>
+      </div>
+          <div class="table-responsive">
+  <table class="appointments-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th><span class="lang-en">Patient Name</span><span class="lang-ta">நோயாளி பெயர்</span></th>
+        <th><span class="lang-en">Phone Number</span><span class="lang-ta">தொலைபேசி எண்</span></th>
+        <th><span class="lang-en">Doctor & Dept</span><span class="lang-ta">மருத்துவர் & பிரிவு</span></th>
+        <th><span class="lang-en">Date & Time</span><span class="lang-ta">தேதி & நேரம்</span></th>
+        <th><span class="lang-en">Doctor Fee</span><span class="lang-ta">சிகிச்சை கட்டணம்</span></th>
+        <th><span class="lang-en">Payment Status</span><span class="lang-ta">கட்டண நிலை</span></th>
+        <th><span class="lang-en">Remaining Balance</span><span class="lang-ta">மீதித் தொகை</span></th>
+        <th><span class="lang-en">Payment Mode</span><span class="lang-ta">கட்டண முறை</span></th>
+        <th><span class="lang-en">Actions</span><span class="lang-ta">செயல்கள்</span></th>
+      </tr>
+    </thead>
+    <tbody id="appointmentsTableBody">
+      <!-- Appointments rendered dynamically via appointment.js -->
+    </tbody>
+  </table>
+</div>        
+          <tbody id="appointmentsTableBody">
+            <!-- Dynamic Rows Generated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- VIEW DETAILS MODAL -->
+  <div class="modal-overlay hidden" id="viewModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>👁️ <span class="lang-en">Appointment Summary</span> <span class="lang-ta">முன்பதிவு விவரங்கள்</span></h4>
+        <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalDetails"></div>
+    </div>
+  </div>
+
+  <script src="appointment-script.js"></script>
+</body>
+</html>

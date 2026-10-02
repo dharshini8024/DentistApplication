@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSAI Dental Clinic - Doctor Admin Panel</title>
+  <link rel="stylesheet" href="doctors-admin.css" />
+</head>
+<body>
+
+  <!-- IDENTICAL HEADER BAR FROM DOCTOR-DASHBOARD -->
+  <header class="app-header">
+    <!-- Left Side: Branding & Logo -->
+    <div class="header-brand">
+      <img src="issai-logo.jpeg" alt="ISSAI Dental Clinic Logo" class="brand-logo" />
+      <div class="brand-text">
+        <h1 class="clinic-title">ISSAI Dental Clinic</h1>
+        <span class="clinic-subtitle-tamil">இசை பல் மருத்துவமனை</span>
+        <p class="doctors-meta">
+          Dr. C. Jeganthpuri, MDS. (Orthodontics) | Dr. S. Manimozhi, BDS.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Side: User Profile & Actions -->
+    <div class="header-actions">
+      <!-- User Badge -->
+      <div class="user-badge">
+        <span class="user-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </span>
+        <span class="user-greeting">Welcome, <strong id="doctorNameDisplay">Dr. S. Manimozhi</strong></span>
+      </div>
+
+      <!-- Language Picker -->
+      <div class="language-picker">
+        <svg class="globe-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <select id="languageSelect" class="lang-dropdown">
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <!-- Logout Button -->
+      <button type="button" class="logout-btn" onclick="window.logout()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ADMIN PANEL CONTAINER -->
+  <div class="admin-container">
+
+    <!-- WELCOME BANNER -->
+    <section class="welcome-banner">
+      <div>
+        <h2 data-i18n="adminTitle">Doctor Administration Panel (நிர்வாக பலகை)</h2>
+        <p data-i18n="adminSubtitle">Manage patient records, daily appointments, clinical schedules, and consultation workflows.</p>
+      </div>
+      <a href="doctors-dashboard.html" target="_blank" class="btn-consultation" data-i18n="btnGoConsultation">
+        🩺 Start Consultation (சிகிச்சை அறைக்குச் செல்)
+      </a>
+    </section>
+
+    <!-- QUICK STATS CARDS -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">👥</span>
+        <div>
+          <h3 id="statTotalPatients">0</h3>
+          <p data-i18n="statTotal">Total Patients (மொத்த நோயாளிகள்)</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📅</span>
+        <div>
+          <h3 id="statTodayAppointments">0</h3>
+          <p data-i18n="statToday">Today's Appointments (இன்றைய முன்பதிவு)</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⏳</span>
+        <div>
+          <h3 id="statWaitingQueue">0</h3>
+          <p data-i18n="statQueue">Waiting in Queue (வரிசையில் உள்ளவர்கள்)</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">💰</span>
+        <div>
+          <h3 id="statTodayCollection">₹0</h3>
+          <p data-i18n="statIncome">Today's Collection (இன்றைய கட்டணம்)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN ADMIN CONTENT GRID -->
+    <div class="admin-grid">
+
+      <!-- LEFT COLUMN: PATIENT MANAGEMENT & QUICK ACTIONS -->
+      <main class="admin-main">
+        
+        <!-- LIVE PATIENT QUEUE TABLE (REQUIRED BY DOCTORS-ADMIN.JS) -->
+        <div class="card">
+          <div class="card-header">
+            <h3 data-i18n="queueHeader">Today's Consultation Queue (இன்றைய வரிசை)</h3>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th data-i18n="tblName">Patient Name</th>
+                <th data-i18n="tblPhone">Phone</th>
+                <th data-i18n="tblSlot">Time Slot</th>
+                <th data-i18n="tblStatus">Status</th>
+                <th data-i18n="tblActions">Actions</th>
+              </tr>
+            </thead>
+            <!-- DYNAMIC QUEUE TARGET -->
+            <tbody id="patientQueue">
+              <!-- doctors-admin.js auto-populates patients here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SEARCH & PATIENT RECORDS TABLE -->
+        <div class="card">
+          <div class="card-header">
+            <h3 data-i18n="patientMgmtHeader">Patient Records & Search (நோயாளி பதிவுகள்)</h3>
+            <div class="search-box">
+              <input type="text" id="patientSearch" placeholder="Search by Name, ID, or Phone..." onkeyup="filterPatients()" />
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th data-i18n="tblName">Patient Name</th>
+                <th data-i18n="tblAge">Age</th>
+                <th data-i18n="tblPhone">Phone</th>
+                <th data-i18n="tblLastVisit">Last Visit</th>
+                <th data-i18n="tblStatus">Status</th>
+                <th data-i18n="tblActions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="patientTableBody">
+              <!-- doctors-admin.js populates history/search patient list here -->
+            </tbody>
+          </table>
+        </div>
+
+      </main>
+
+      <!-- RIGHT COLUMN: CLINICAL TOOLS & QUICK UTILITIES -->
+      <aside class="admin-sidebar">
+
+        <!-- QUICK ADD PATIENT -->
+        <div class="card">
+          <h3 data-i18n="addPatientHeader">Quick Add Patient (புதிய நோயாளி)</h3>
+          <form id="addPatientForm" onsubmit="addPatient(event)">
+            <div class="form-group">
+              <label data-i18n="lblFullName">Full Name *</label>
+              <input type="text" id="newPatientName" required placeholder="e.g. Ramesh" />
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label data-i18n="lblAge">Age *</label>
+                <input type="number" id="newPatientAge" required placeholder="28" />
+              </div>
+              <div class="form-group">
+                <label data-i18n="lblGender">Gender</label>
+                <select id="newPatientGender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label data-i18n="lblPhone">Phone Number *</label>
+              <input type="tel" id="newPatientPhone" required placeholder="9876543210" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="lblReason">Chief Complaint / Reason</label>
+              <input type="text" id="newPatientReason" placeholder="e.g. Toothache #46" />
+            </div>
+            <button type="submit" class="btn-submit" data-i18n="btnAddQueue">Add to Consultation Queue</button>
+          </form>
+        </div>
+
+        <!-- CLINICAL PRESETS & SETTINGS -->
+        <div class="card">
+          <h3 data-i18n="quickToolsHeader">Doctor Utilities (மருத்துவக் கருவிகள்)</h3>
+          <ul class="utility-list">
+            <li><a href="#" onclick="alert('Navigating to Prescription Templates...')">💊 <span data-i18n="toolRxTemplates">Prescription Templates</span></a></li>
+            <li><a href="#" onclick="alert('Opening Lab Test Request Forms...')">🔬 <span data-i18n="toolLabOrders">Lab & X-Ray Orders</span></a></li>
+            <li><a href="#" onclick="alert('Opening Fee Structure Settings...')">🏷️ <span data-i18n="toolFeeStructure">Fee Structure & Pricing</span></a></li>
+            <li><a href="#" onclick="alert('Exporting Daily Summary PDF...')">📄 <span data-i18n="toolExportReport">Export Daily Report</span></a></li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+  <script src="doctors-admin.js"></script>
+</body>
+</html>

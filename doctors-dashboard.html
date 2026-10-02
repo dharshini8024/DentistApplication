@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSAI Dental Clinic - Doctor Workspace</title>
+  <link rel="stylesheet" href="doctor-dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <!-- IDENTICAL HEADER BAR FROM DOCTOR-DASHBOARD -->
+   <header class="app-header">
+  <!-- Left Side: Branding & Logo -->
+  <div class="header-brand">
+    <img src="issai-logo.jpeg" alt="ISSAI Dental Clinic Logo" class="brand-logo" />
+    <div class="brand-text">
+      <h1 class="clinic-title">ISSAI Dental Clinic</h1>
+      <span class="clinic-subtitle-tamil">இசை பல் மருத்துவமனை</span>
+      <p class="doctors-meta">
+        Dr. C. Jeganthpuri, MDS. (Orthodontics) | Dr. S. Manimozhi, BDS.
+      </p>
+    </div>
+  </div>
+
+  <!-- Right Side: User Profile & Actions -->
+  <div class="header-actions">
+    <!-- User Badge -->
+    <div class="user-badge">
+      <span class="user-avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </span>
+      <span class="user-greeting">Welcome, <strong id="welcomeDoctorName">Dr. Thyagu</strong></span>
+    </div>
+
+    <!-- Language Picker -->
+    <div class="language-picker">
+      <svg class="globe-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="2" y1="12" x2="22" y2="12"></line>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+      </svg>
+      <select id="languageSelect" class="lang-dropdown">
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <!-- Logout Button -->
+    <button type="button" class="logout-btn" onclick="window.logout()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+      <span>Logout</span>
+    </button>
+  </div>
+</header>
+  <div class="dashboard-layout">
+
+    <!-- LEFT SIDEBAR: ACTIVE QUEUE & COMPLETED SECTION -->
+    <aside class="queue-sidebar">
+      
+      <!-- ACTIVE QUEUE -->
+      <div class="sidebar-header">
+        <h3 data-i18n="queueTitle">Patient Queue</h3>
+        <span class="queue-badge" id="queueCount">0 Waiting</span>
+      </div>
+      <div class="queue-list" id="queueList"></div>
+
+      <!-- COMPLETED TODAY -->
+      <div class="sidebar-header completed-header">
+        <h3 data-i18n="completedHeader">Completed Today</h3>
+        <span class="queue-badge completed-badge" id="completedCount">0 Saved</span>
+      </div>
+      <div class="queue-list completed-list" id="completedList"></div>
+
+      <button type="button" class="btn-next-queue" onclick="completeAndNextPatient()" data-i18n="completeAndNextBtn">
+        ✓ Complete & Next
+      </button>
+    </aside>
+
+    <!-- MAIN CLINICAL WORKSPACE -->
+    <main class="main-content">
+
+      <!-- ACTIVE PATIENT BANNER -->
+      <div class="section-card active-patient-card">
+        <div class="patient-summary">
+          <div class="patient-details">
+            <span class="status-tag" id="statusTag" data-i18n="inConsultationHeader">In Consultation</span>
+            <h2 id="activePatientName" data-i18n="selectPatientPrompt">Select a Patient</h2>
+            <p id="activePatientMeta" class="patient-meta">ID: -- &nbsp;|&nbsp; Age: -- &nbsp;|&nbsp; Phone: --</p>
+          </div>
+          <div class="visit-info">
+            <label data-i18n="visitDateLabel">Visit Date:</label>
+            <input type="date" id="visitDate" />
+          </div>
+        </div>
+      </div>
+
+      <form id="clinicalRecordForm" onsubmit="saveClinicalRecord(event)">
+        <input type="hidden" id="activePatientId" />
+        <input type="hidden" id="activeRecordId" />
+
+        <!-- 1. PRIMARY COMPLAINT -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">1</span>
+            <h3 data-i18n="primaryComplaintLabel">Primary Complaint</h3>
+          </div>
+          <div class="form-group">
+            <textarea id="primaryComplaint" rows="2" placeholder="Enter primary complaint (e.g. Pain in lower right back tooth)..."></textarea>
+          </div>
+        </div>
+
+        <!-- 2. CHIEF COMPLAINTS / SYMPTOMS -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">2</span>
+            <h3 data-i18n="chiefComplaintsLabel">Chief Complaints & Symptoms</h3>
+          </div>
+          <div class="form-group">
+            <textarea id="chiefComplaints" rows="2" placeholder="Enter patient reported symptoms or previous dental treatment history..."></textarea>
+          </div>
+        </div>
+
+        <!-- 3. GENERAL MEDICAL HISTORY -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">3</span>
+            <h3 data-i18n="medicalHistoryLabel">General Medical History</h3>
+          </div>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" id="m1"><span>Heart Diseases</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m2"><span>High / Low BP</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m3"><span>Diabetes</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m4"><span>Stomach / Liver Issues</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m5"><span>Thyroid Issues</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m6"><span>Respiratory Disorders</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m7"><span>Kidney Issues</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m8"><span>Nerve / Brain / Spinal</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m9"><span>Epilepsy / Fits</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m10"><span>Infectious Diseases</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m11"><span>Blood Clotting Disorder</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m12"><span>Cancer / Malignancy</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m13"><span>Joint Pain / Arthritis</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m14"><span>Hospitalizations</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m15"><span>Eye, Ear, Nose Issues</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m16"><span>Jaundice</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m17"><span>Asthma</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m18"><span>Tuberculosis (TB)</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m19"><span>Venereal / STDs</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m20"><span>Fainting / Dizziness</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m21"><span>Current Medications</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m22"><span>Drug Allergies</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m23"><span>Other Conditions</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="m24"><span>Pregnancy</span></label>
+          </div>
+        </div>
+
+        <!-- 4. HABITS & RISKS -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">4</span>
+            <h3 data-i18n="habitsLabel">Habits & Risk Factors</h3>
+          </div>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" id="h1"><span>Tobacco Products</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="h2"><span>Alcohol</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="h3"><span>Nail Biting / Pencil Biting</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="h4"><span>Mouth Breathing</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="h5"><span>Thumb Sucking</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="h6"><span>Lip Biting</span></label>
+          </div>
+        </div>
+
+        <!-- 5. EXTRA-ORAL EXAMINATION -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">5</span>
+            <h3 data-i18n="extraOralLabel">Extra-Oral Examination</h3>
+          </div>
+          <div class="checkbox-grid">
+            <label class="checkbox-item"><input type="checkbox" id="eo1"><span>Facial Symmetry</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo2"><span>Facial Height</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo3"><span>Facial Profile</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo4"><span>Lip Projection</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo5"><span>Tooth Exposure</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo6"><span>Jaw Posture</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo7"><span>Dental / Jaw Convexity</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo8"><span>Nasal Prominence</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo9"><span>Naso-Labial Angle</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo10"><span>Mento-Labial Sulcus</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo11"><span>Lower Jaw Angle</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo12"><span>Zygomatic Prominence</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo13"><span>Lower Jaw Size</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo14"><span>Muscles</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo15"><span>TMJ / Jaw Joint</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo16"><span>Lymph Nodes</span></label>
+            <label class="checkbox-item"><input type="checkbox" id="eo17"><span>Swelling / Lump</span></label>
+          </div>
+        </div>
+
+        <!-- 6. INTRA-ORAL EXAMINATION -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">6</span>
+            <h3 data-i18n="intraOralLabel">Intra-Oral Examination</h3>
+          </div>
+          
+          <div class="sub-group">
+            <strong class="sub-label" data-i18n="teethConditionLabel">Teeth Condition</strong>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" id="t1"><span>Caries / Decay</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t2"><span>Missing Tooth</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t3"><span>Root Stumps</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t4"><span>Attrition / Erosion</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t5"><span>Sensitivity</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t6"><span>Calculus & Stains</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t7"><span>Tooth Mobility</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="t8"><span>Malalignment</span></label>
+            </div>
+          </div>
+
+          <div class="sub-group">
+            <strong class="sub-label" data-i18n="softTissueLabel">Soft Tissue Condition</strong>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" id="s1"><span>Gums / Gingiva</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="s2"><span>Palate</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="s3"><span>Cheek / Buccal</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="s4"><span>Tongue</span></label>
+              <label class="checkbox-item"><input type="checkbox" id="s5"><span>Ulcer / Lesion</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. CLINICAL FINDING NOTES -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">7</span>
+            <h3 data-i18n="examNotesLabel">Clinical Finding Notes</h3>
+          </div>
+          <div class="form-group">
+            <textarea id="examNotes" rows="3" placeholder="Enter specific clinical finding details, probe measurements, observation notes..."></textarea>
+          </div>
+        </div>
+
+        <!-- 8. INVESTIGATIONS -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">8</span>
+            <h3 data-i18n="investigationLabel">Investigation List</h3>
+          </div>
+          <div class="form-group">
+            <textarea id="investigationText" rows="2" placeholder="e.g., IOPA X-Ray #16, OPG, RBS Blood Test"></textarea>
+          </div>
+        </div>
+
+        <!-- 9. TREATMENT PLAN & ESTIMATED FEES TABLE -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">9</span>
+            <h3 data-i18n="treatmentPlanLabel">Treatment Plan & Fee Estimation</h3>
+          </div>
+
+          <div class="treatment-grid">
+            <div class="treatment-col">
+              <h4 data-i18n="docPlanLabel">Doctor Advised Plan</h4>
+              <textarea id="docAdvisedPlan" class="compact-textarea" rows="4" placeholder="1. Consultation&#10;2. X-Ray&#10;3. Scaling"></textarea>
+            </div>
+
+            <div class="treatment-col">
+              <h4 data-i18n="patientPlanLabel">Patient Accepted Plan</h4>
+              <textarea id="patientAcceptedPlan" class="compact-textarea" rows="4" placeholder="1. Proceeding with Consultation & X-Ray"></textarea>
+            </div>
+          </div>
+
+          <!-- ITEMIZED ESTIMATED FEES TABLE -->
+          <div class="fee-estimation-box">
+            <h4 data-i18n="estimatedFeeBreakdown">Estimated Fee Breakdown</h4>
+            
+            <div class="table-wrapper">
+              <table class="clinical-table" id="estimateFeeTable">
+                <thead>
+                  <tr>
+                    <th data-i18n="procedureDescHeader">Procedure / Service Description</th>
+                    <th style="width: 140px;" data-i18n="estimatedAmountHeader">Estimated Amount (₹)</th>
+                    <th style="width: 50px; text-align: center;"></th>
+                  </tr>
+                </thead>
+                <tbody id="feeItemsBody">
+                  <tr>
+                    <td><input type="text" class="fee-desc" placeholder="e.g. Consultation Fee" value="Consultant" /></td>
+                    <td><input type="number" class="fee-amount" placeholder="500" value="500" oninput="calculateTotalEstimate()" /></td>
+                    <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="removeFeeRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="total-row">
+                    <td style="text-align: right; font-weight: 700;" data-i18n="totalEstimateLabel">Total Estimated Fee:</td>
+                    <td>
+                      <input type="number" id="docEstimatedCost" readonly placeholder="₹ 0" />
+                    </td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <button type="button" class="btn-add-row" onclick="addFeeRow()" data-i18n="addFeeBtn">+ Add Fee Item</button>
+          </div>
+        </div>
+
+        <!-- 10. PRESCRIPTION PAD -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">10</span>
+            <h3 data-i18n="prescriptionPadLabel">Prescription Pad</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="clinical-table">
+              <thead>
+                <tr>
+                  <th data-i18n="medicineNameHeader">Medicine Name</th>
+                  <th data-i18n="dosageHeader">Dosage (M-A-N)</th>
+                  <th data-i18n="timingHeader">Timing</th>
+                  <th data-i18n="daysHeader">Days</th>
+                </tr>
+              </thead>
+              <tbody id="prescriptionBody">
+                <tr>
+                  <td><input type="text" class="med-name" placeholder="e.g. Amoxicillin 500mg" /></td>
+                  <td><input type="text" class="med-dose" placeholder="1 - 0 - 1" /></td>
+                  <td><input type="text" class="med-timing" placeholder="After Food" /></td>
+                  <td><input type="text" class="med-days" placeholder="5 days" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="btn-add-row" onclick="addPrescriptionRow()" data-i18n="addMedicineBtn">+ Add Medicine</button>
+        </div>
+
+        <!-- 11. NEXT VISIT -->
+        <div class="section-card">
+          <div class="card-header">
+            <span class="step-num">11</span>
+            <h3 data-i18n="nextVisitHeader">Next Visit Schedule</h3>
+          </div>
+          <div class="next-visit-grid">
+            <div class="form-group">
+              <label data-i18n="nextVisitLabel">Next Visit Date & Time</label>
+              <input type="text" id="nextVisitInput" placeholder="e.g., 21/09/2026 at 5:00 PM or After 1 week" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. CONSENT -->
+        <div class="section-card rights-card">
+          <h4 data-i18n="patientConsentHeader">Patient Rights & Consent</h4>
+          <ul class="rights-list">
+            <li data-i18n="consentNote1">Understand that treatments are done for health benefits and obtain complete care.</li>
+            <li data-i18n="consentNote2">Discuss proposed treatments directly with the dentist.</li>
+          </ul>
+          <label class="consent-checkbox-item">
+            <input type="checkbox" id="patientConsent" required />
+            <span data-i18n="consentLabel">Patient / Guardian Informed Consent Obtained</span>
+          </label>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit" data-i18n="saveRecordBtn">Save Complete Clinical Record</button>
+      </form>
+
+    </main>
+  </div>
+
+  <script src="doctor-dashboard.js"></script>
+</body>
+</html>

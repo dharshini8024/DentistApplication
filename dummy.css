@@ -1,0 +1,298 @@
+:root {
+  --primary-dark: #0f172a;
+  --secondary-dark: #1e293b;
+  --accent-blue: #0284c7;
+  --accent-blue-hover: #0369a1;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  font-size: 14px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* TOP NAVBAR */
+.top-nav {
+  background-color: var(--primary-dark);
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.clinic-logo {
+  height: 40px;
+  background: white;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.clinic-english-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.clinic-tamil-title {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.doctors-tag {
+  margin: 2px 0 0 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #334155;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.lang-selector select {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.lang-selector select option {
+  background: var(--primary-dark);
+  color: white;
+}
+
+/* MAIN CONTAINER & DUAL GRID */
+.login-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.page-title-wrapper {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.page-title-wrapper h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.5rem;
+  color: var(--secondary-dark);
+}
+
+.page-title-wrapper p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .login-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.login-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+/* MATCHING BADGES AND STYLES */
+.card-badge {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.doctor-badge {
+  background: #e0f2fe;
+  color: var(--accent-blue);
+}
+
+.reception-badge {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.alert-box {
+  padding: 8px 12px;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: var(--secondary-dark);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+.form-footer {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-link {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  color: white;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+  margin-top: auto;
+}
+
+.btn-doctor {
+  background: var(--accent-blue);
+}
+
+.btn-doctor:hover {
+  background: var(--accent-blue-hover);
+}
+
+.btn-reception {
+  background: #d97706;
+}
+
+.btn-reception:hover {
+  background: #b45309;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: white;
+  width: 380px;
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.modal-header h4 {
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.modal-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.btn-submit-reset {
+  width: 100%;
+  padding: 8px;
+  background: var(--primary-dark);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* BILINGUAL CONTROLS */
+body[data-lang="en"] .lang-ta { display: none !important; }
+body[data-lang="ta"] .lang-en { display: none !important; }
+body[data-lang="both"] .lang-en,
+body[data-lang="both"] .lang-ta { display: inline-block; }

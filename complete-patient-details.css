@@ -1,0 +1,270 @@
+:root {
+  --primary-dark: #0f172a;
+  --secondary-dark: #1e293b;
+  --accent-blue: #0284c7;
+  --accent-blue-hover: #0369a1;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  font-size: 14px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* TOP NAVBAR */
+.top-nav {
+  background-color: var(--primary-dark);
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.clinic-logo {
+  height: 40px;
+  background: white;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.clinic-english-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.clinic-tamil-title {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.doctors-tag {
+  margin: 2px 0 0 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #334155;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.lang-selector select {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.lang-selector select option {
+  background: var(--primary-dark);
+  color: white;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* NAVIGATION BAR */
+.admin-navigation-bar {
+  background-color: var(--secondary-dark);
+  display: flex;
+  gap: 8px;
+  padding: 8px 20px;
+}
+
+.nav-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: #334155;
+  color: white;
+}
+
+.nav-btn.active {
+  background: var(--accent-blue);
+  color: white;
+}
+
+/* MAIN CONTAINER */
+.page-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.patient-lookup-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.search-icon {
+  font-size: 2rem;
+  background: #e0f2fe;
+  padding: 10px;
+  border-radius: 50%;
+  line-height: 1;
+}
+
+.card-header h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.25rem;
+  color: var(--secondary-dark);
+}
+
+.lookup-subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  color: var(--secondary-dark);
+}
+
+.required-star {
+  color: #ef4444;
+}
+
+.search-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input-group input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.search-input-group input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+.btn-search {
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-search:hover {
+  background: var(--accent-blue-hover);
+}
+
+.demo-hint {
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: #f1f5f9;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* RESULTS DISPLAY */
+.results-container {
+  margin-top: 20px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.patient-profile-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.patient-profile-header h3 {
+  margin: 0;
+  color: var(--accent-blue);
+}
+
+/* LANGUAGE CONTROLS */
+body.lang-mode-ta .lang-en { display: none !important; }
+body.lang-mode-en .lang-ta { display: none !important; }

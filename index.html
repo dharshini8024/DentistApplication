@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISSAI Dental Clinic - Portal Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body data-lang="en">
+
+  <!-- TOP NAVBAR WITH CLINIC BRANDING -->
+  <header class="top-nav">
+    <div class="header-left">
+      <div class="clinic-text-group">
+        <h2 class="clinic-english-title">ISSAI Dental Clinic</h2>
+        <span class="clinic-tamil-title">(இசை பல் மருத்துவமனை)</span>
+        <p class="doctors-tag">Dr. C. Jeganthpuri, MDS. (Orthodontics) &nbsp;|&nbsp; Dr. S. Manimozhi, BDS.</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <div class="lang-selector">
+        <span class="icon-globe">🌐</span>
+        <!-- Language Selector Dropdown -->
+        <select id="languageSelect" class="lang-dropdown">
+          <option value="en">English</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DUAL-COLUMN LOGIN CONTAINER -->
+  <main class="login-container">
+
+    <!-- DUAL COLUMNS LAYOUT -->
+    <div class="login-grid">
+      
+      <!-- COLUMN 1: DOCTOR LOGIN -->
+      <div class="login-card doctor-card">
+        <div class="card-badge doctor-badge">
+          🩺 <span data-i18n="doctorPortal">Doctor Portal</span>
+        </div>
+
+        <!-- Alert Box for Doctor Errors -->
+        <div id="doctorLoginError" class="alert-box login-error" hidden></div>
+        <div id="doctorAlert" class="alert-box login-error" hidden></div>
+
+        <form id="doctorLoginForm">
+          <div class="form-group">
+            <label class="field-label" for="doctorLoginId" data-i18n="loginIdLabel">Doctor Username / ID</label>
+            <input 
+              type="text" 
+              id="doctorLoginId" 
+              data-i18n="loginIdPlaceholder" 
+              placeholder="Enter Username or ID" 
+              required 
+              autocomplete="username" 
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="doctorPassword" data-i18n="passwordLabel">Password</label>
+            <input 
+              type="password" 
+              id="doctorPassword" 
+              data-i18n="passwordPlaceholder" 
+              placeholder="Enter Password" 
+              required 
+              autocomplete="current-password" 
+            />
+          </div>
+
+          <div class="form-footer">
+            <a href="#" class="forgot-link" id="doctorForgotLink" data-i18n="forgotPass">Forgot Password?</a>
+          </div>
+
+          <button type="submit" id="doctorSubmitBtn" class="btn-submit btn-doctor" data-i18n="loginBtn">
+            Login as Doctor
+          </button>
+        </form>
+      </div>
+
+      <!-- COLUMN 2: RECEPTION / ADMIN LOGIN -->
+      <div class="login-card reception-card">
+        <div class="card-badge reception-badge">
+          📋 <span data-i18n="receptionPortal">Reception Portal</span>
+        </div>
+
+        <!-- Alert Box for Reception Errors -->
+        <div id="adminLoginError" class="alert-box login-error" hidden></div>
+        <div id="receptionAlert" class="alert-box login-error" hidden></div>
+
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label class="field-label" for="adminLoginId" data-i18n="loginIdLabel">Reception Username / ID</label>
+            <input 
+              type="text" 
+              id="adminLoginId" 
+              data-i18n="loginIdPlaceholder" 
+              placeholder="Enter Username or ID" 
+              required 
+              autocomplete="username" 
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label" for="adminPassword" data-i18n="passwordLabel">Password</label>
+            <input 
+              type="password" 
+              id="adminPassword" 
+              data-i18n="passwordPlaceholder" 
+              placeholder="Enter Password" 
+              required 
+              autocomplete="current-password" 
+            />
+          </div>
+
+          <div class="form-footer">
+            <a href="#" class="forgot-link" id="receptionForgotLink" data-i18n="forgotPass">Forgot Password?</a>
+          </div>
+
+          <button type="submit" id="adminSubmitBtn" class="btn-submit btn-reception" data-i18n="loginBtn">
+            Login as Reception
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FORGOT PASSWORD MODAL -->
+  <div id="forgotModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4 data-i18n="forgotPass">Reset Password</h4>
+        <button type="button" class="close-btn" id="closeForgotBtn">✕</button>
+      </div>
+      <p class="modal-desc" id="modalTargetDesc" data-i18n="serverError">
+        Enter registered email address to receive password recovery link.
+      </p>
+      
+      <form id="forgotForm">
+        <div class="form-group">
+          <input type="email" id="resetEmailInput" placeholder="name@issai.com" required />
+        </div>
+        <button type="submit" class="btn-submit-reset" id="resetSubmitBtn" data-i18n="loginBtn">
+          Send Reset Link
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
